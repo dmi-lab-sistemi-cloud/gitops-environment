@@ -1,0 +1,21 @@
+name: AWS Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Get Private Key
+      run: echo ${{ EC2_DEV_PRIVATE_KEY }} >> ec2_dev_private_key
+    
+    - name: Copy docker-compose.yml on remote DEV Environment
+      run: scp -i docker-compose.yml ec2_dev_private_key ec2-user@${EC2_DEV_HOST_NAME}:/home/ec2-user 
+    
+    - name: Run docker compose on remote DEV Environment
+      run: ssh -i ec2_dev_private_key ec2-user@${EC2_DEV_HOST_NAME} docker compose up
