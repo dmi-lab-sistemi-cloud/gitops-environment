@@ -21,4 +21,4 @@ jobs:
       run: scp -i ec2_dev_private_key -o StrictHostKeyChecking=no docker-compose.yml ec2-user@${{ secrets.EC2_DEV_HOST_NAME }}:/home/ec2-user 
     
     - name: Run docker compose on remote DEV Environment
-      run: ssh -i ec2_dev_private_key -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_DEV_HOST_NAME }} docker-compose -d up
+      run: ssh -i ec2_dev_private_key -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_DEV_HOST_NAME }} docker-compose up --detach
