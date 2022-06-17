@@ -15,6 +15,8 @@ jobs:
     - name: Get Private Key
       run: echo "${{ secrets.EC2_DEV_PRIVATE_KEY }}" > ec2_dev_private_key
     
+    - run: chmod 600 ec2_dev_private_key
+    
     - name: Copy docker-compose.yml on remote DEV Environment
       run: scp -i ec2_dev_private_key docker-compose.yml ec2-user@${{ secrets.EC2_DEV_HOST_NAME }}:/home/ec2-user 
     
